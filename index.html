@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+</head>
+
+<style>
+    #jogo{ 
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+        width: 350px; 
+        height: 350px;
+        justify-self: center;
+        margin-top: 2em;
+    }
+
+    .quadrado { 
+        background-color: rgb(0, 119, 223);
+        width: 80px;
+        height: 80px;
+        border: 1px solid black;
+        font-size: 30px;
+
+    }
+
+    .quadrado:hover {
+        background-color: rgb(255, 0, 140);
+        cursor: pointer;
+    }
+
+</style>
+<body>
+    <div id="nome" style="display: flex; justify-content: center;">
+        <h1>Jogo da Velha</h1>
+    </div>
+
+
+    <div style="display:flex; justify-content: space-evenly; text-align: center;" >
+        <div class="">
+            <p>Participante 1</p>
+            <input type="text">
+        </div>
+        <div>
+            <p>VS</p>
+
+        </div>
+        <div class="">
+            <p>Participante 2</p>
+            <input type="text">
+        </div>
+    </div>
+
+    <div id="jogo">
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado" quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado"  quadrado></div>
+        <div class="quadrado" quadrado></div>
+    </div>
+
+    <div style="display:flex; justify-content: space-evenly; text-align: center; margin-top: 1em;">
+        <button id="reiniciar" style="height: 50px; width: 200px; border:none">Reiniciar</button>
+    </div>
+
+
+    <script src="./script.js"></script>
+</body>
+</html>
