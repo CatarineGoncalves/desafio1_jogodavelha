@@ -1,6 +1,8 @@
 const jogo = document.getElementById("jogo");
-const quadrados = document.querySelectorAll("[quadrado]");
+const quadrados = document.querySelectorAll("[quadrado]")
+const reiniciar = document.getElementById("reiniciar")
 const jogadores = ["X", "O"];
+
 
 let jogadorAtual = jogadores[0];
 let jogadorAtivo = false;
@@ -20,15 +22,34 @@ const combinacoes = [
 ]
 
 
-
-function jogada(e) {
-    console.log(e)
+function cliquesnosquadrados(e) {
     const quadrado = e.target;
-    console.log(quadradoSelecionado)
-    const quadradoI = Array.from(quadrados).indexOf(quadrado);
+    //target dispara o evento
+    quadrado.innerHTML = jogadorAtual;
 
-    quadrado.textContent = jogadorAtual;
-    console.log(quadradoI)
+    if (vitoria()) {
+        alert(`O jogador ${jogadorAtual} venceu!`);
+        jogadorAtivo = true;
+        return;
+    }
+
+    if(jogadorAtual === jogadores[0]) {
+        jogadorAtual = jogadores[1];
+    } else {
+        jogadorAtual = jogadores[0];
+    }
+
+}   
+
+function vitoria() {
+    return combinacoes.some(combinacao => {
+        return combinacao.every(index => {
+            return quadrados[index].innerHTML === jogadorAtual;
+        });
+    });
 }
 
+quadrados.forEach(quadrado => {
+    quadrado.addEventListener("click", cliquesnosquadrados);
+})
 
