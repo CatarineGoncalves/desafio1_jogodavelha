@@ -1,97 +1,224 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title></title>
-</head>
-
-<style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo da Velha 4x4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
     body {
-        font-family: "Open Sans", sans-serif;
-
-    }
-    #jogo{ 
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-        grid-column-gap: 0px;
-        grid-row-gap: 0px;
-        width: 350px; 
-        height: 350px;
-        justify-self: center;
-        margin-top: 2em;
+      font-family: "Open Sans", sans-serif;
+      text-align: center;
+      padding: 1em;
+      background-color: #f5f5f5;
     }
 
-    .quadrado { 
-        background-color: rgb(189, 203, 214);
-        width: 90px;
-        height: 90px;
-        border: 1px solid rgb(255, 255, 255);
-        font-size: 30px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        color: #2645cf;
-        border-radius: 10px;
+    h1 {
+      color: #2645cf;
+    }
 
+    .players, .placar {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 1em 0;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    input {
+      border-radius: 10px;
+      padding: 0.5em;
+      border: 1px solid #2645cf46;
+      width: 160px;
+      text-align: center;
+    }
+
+    #vez {
+      font-size: 1.2em;
+      margin: 1em 0;
+    }
+
+    .player-nome {
+      font-weight: bold;
+      color: #2645cf;
+    }
+
+    #jogo {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      width: 100%;
+      max-width: 360px;
+      margin: 1.5em auto;
+    }
+
+    .quadrado {
+      background-color: rgb(189, 203, 214);
+      aspect-ratio: 1 / 1;
+      font-size: 2em;
+      color: #2645cf;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      user-select: none;
     }
 
     .quadrado:hover {
-        background-color: #2645cf;
-        cursor: pointer;
+      background-color: #2645cf;
+      color: #fff;
     }
 
-</style>
+    button {
+      margin-top: 1em;
+      padding: 1em 2em;
+      background-color: #2645cf;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1a2e8c;
+    }
+  </style>
+</head>
 <body>
-    <div id="nome" style="display: flex; justify-content: center;">
-        <h1>Jogo da Velha</h1>
+
+  <h1>Jogo da Velha 4x4</h1>
+
+  <div class="players">
+    <div>
+      <p>Participante 1 (X)</p>
+      <input type="text" id="jogadorX" placeholder="Nome do jogador X" />
     </div>
-
-
-    <div style="display:flex; justify-content: space-evenly; text-align: center;" >
-        <div class="">
-            <p>Participante 1</p>
-            <input style="border-radius: 10px; border: 1px solid #2645cf46;" type="text">
-        </div>
-        <div>
-            <p style="font-size: 40px; color: red"><b>VS</b></p>
-
-        </div>
-        <div class="">
-            <p>Participante 2</p>
-            <input style="border-radius: 10px; border: 1px solid #2645cf46;" type="text">
-
-        </div>
+    <div>
+      <p>Participante 2 (O)</p>
+      <input type="text" id="jogadorO" placeholder="Nome do jogador O" />
     </div>
+  </div>
 
-    <div id="jogo">
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado" quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado"  quadrado></div>
-        <div class="quadrado" quadrado></div>
-    </div>
+  <div id="vez">Vez de: <span class="player-nome" id="vezNome">Jogador X</span></div>
 
-    <div style="display:flex; justify-content: space-evenly; text-align: center; margin-top: 1em;">
-        <button id="reiniciar" style="height: 50px; width: 200px; border:none">Reiniciar</button>
-    </div>
+  <div class="placar">
+    <div><span class="player-nome" id="nomeX">Jogador X</span>: <span id="pontosX">0</span></div>
+    <div><span class="player-nome" id="nomeO">Jogador O</span>: <span id="pontosO">0</span></div>
+  </div>
 
+  <div id="jogo"></div>
 
-    <script src="./script.js"></script>
+  <button id="reiniciar">Reiniciar Jogo</button>
+
+  <script>
+    const jogo = document.getElementById("jogo");
+    const reiniciar = document.getElementById("reiniciar");
+
+    const vezNome = document.getElementById("vezNome");
+    const jogadorXInput = document.getElementById("jogadorX");
+    const jogadorOInput = document.getElementById("jogadorO");
+    const nomeX = document.getElementById("nomeX");
+    const nomeO = document.getElementById("nomeO");
+    const pontosX = document.getElementById("pontosX");
+    const pontosO = document.getElementById("pontosO");
+
+    const jogadores = ["X", "O"];
+    let jogadorAtual = jogadores[0];
+    let quadrados = [];
+    let jogoEncerrado = false;
+
+    const combinacoes = [
+      [0, 1, 2, 3],
+      [4, 5, 6, 7],
+      [8, 9, 10, 11],
+      [12, 13, 14, 15],
+      [0, 4, 8, 12],
+      [1, 5, 9, 13],
+      [2, 6, 10, 14],
+      [3, 7, 11, 15],
+      [0, 5, 10, 15],
+      [3, 6, 9, 12]
+    ];
+
+    function criarQuadrados() {
+      jogo.innerHTML = "";
+      quadrados = [];
+      jogoEncerrado = false;
+
+      for (let i = 0; i < 16; i++) {
+        const div = document.createElement("div");
+        div.classList.add("quadrado");
+        div.dataset.index = i;
+        div.addEventListener("click", jogar);
+        jogo.appendChild(div);
+        quadrados.push(div);
+      }
+
+      atualizarNomeJogadores();
+      jogadorAtual = "X";
+      atualizarVez();
+    }
+
+    function jogar(e) {
+      const quadrado = e.target;
+      const index = quadrado.dataset.index;
+
+      if (quadrado.textContent !== "" || jogoEncerrado) return;
+
+      quadrado.textContent = jogadorAtual;
+
+      if (verificarVitoria()) {
+        jogoEncerrado = true;
+        atualizarPontuacao();
+        setTimeout(() => {
+          alert(`O jogador ${obterNomeAtual()} venceu!`);
+        }, 100);
+        return;
+      }
+
+      jogadorAtual = jogadorAtual === "X" ? "O" : "X";
+      atualizarVez();
+    }
+
+    function verificarVitoria() {
+      return combinacoes.some(combinacao => {
+        return combinacao.every(index => {
+          return quadrados[index].textContent === jogadorAtual;
+        });
+      });
+    }
+
+    function atualizarVez() {
+      vezNome.textContent = obterNomeAtual();
+    }
+
+    function obterNomeAtual() {
+      return jogadorAtual === "X"
+        ? jogadorXInput.value || "Jogador X"
+        : jogadorOInput.value || "Jogador O";
+    }
+
+    function atualizarNomeJogadores() {
+      nomeX.textContent = jogadorXInput.value || "Jogador X";
+      nomeO.textContent = jogadorOInput.value || "Jogador O";
+    }
+
+    function atualizarPontuacao() {
+      if (jogadorAtual === "X") {
+        pontosX.textContent = parseInt(pontosX.textContent) + 1;
+      } else {
+        pontosO.textContent = parseInt(pontosO.textContent) + 1;
+      }
+    }
+
+    reiniciar.addEventListener("click", criarQuadrados);
+
+    // Inicializa
+    criarQuadrados();
+  </script>
 </body>
 </html>
